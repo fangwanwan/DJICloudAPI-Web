@@ -17,11 +17,22 @@
       >{{ item.label }}</a-button
     >
     </router-link>
+    <a-button
+      class="mt10"
+      style="width:100%;"
+      type="primary"
+      @click="openHlsPlayer"
+    >HLS Live</a-button>
   </div>
   <div class="live" v-if="showLive" v-drag-window>
     <div style="height: 40px; width: 100%" class="drag-title"></div>
     <a style="position: absolute; right: 10px; top: 10px; font-size: 16px; color: white;" @click="() => root.$router.push('/' + ERouterName.LIVESTREAM)"><CloseOutlined /></a>
     <router-view :name="routeName" />
+  </div>
+  <div class="hls-live-modal" v-if="hlsPlayerVisible" v-drag-window>
+    <div style="height: 40px; width: 100%" class="drag-title"></div>
+    <a style="position: absolute; right: 10px; top: 10px; font-size: 16px; color: white;" @click="closeHlsPlayer"><CloseOutlined /></a>
+    <HlsPlayer />
   </div>
 </template>
 
@@ -39,6 +50,14 @@ const options = [
   { key: 0, label: 'Agora Live', path: '/' + ERouterName.LIVESTREAM + '/' + ERouterName.LIVING, routeName: 'LiveAgora' },
   { key: 1, label: 'RTMP/GB28181 Live', path: '/' + ERouterName.LIVESTREAM + '/' + ERouterName.LIVING, routeName: 'LiveOthers' }
 ]
+
+const hlsPlayerVisible = ref(false)
+function openHlsPlayer () {
+  hlsPlayerVisible.value = true
+}
+function closeHlsPlayer () {
+  hlsPlayerVisible.value = false
+}
 
 const selectLivestream = (route: string) => {
   showLive.value = root.$route.name === ERouterName.LIVING
@@ -82,6 +101,17 @@ onMounted(() => {
   text-align: center;
   width: 800px;
   height: 720px;
+  background: #232323;
+}
+.hls-live-modal {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  top: 10px;
+  transform: translateX(-50%);
+  text-align: center;
+  width: 800px;
+  height: 540px;
   background: #232323;
 }
 </style>

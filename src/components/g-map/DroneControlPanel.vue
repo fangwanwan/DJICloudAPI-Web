@@ -150,12 +150,15 @@
                 {{ cmdItem.operateText }}
               </Button>
             </div>
-            <div>
-              <Button size="small" ghost @click="openLivestreamAgora" >
+            <div class="row">
+              <Button size="small" ghost @click="openLivestreamAgora">
                 <span>Agora Live</span>
               </Button>
-              <Button size="small" ghost @click="openLivestreamOthers" >
+              <Button size="small" ghost @click="openLivestreamOthers">
                 <span>RTMP/GB28181 Live</span>
+              </Button>
+              <Button size="small" ghost @click="openHlsPlayer">
+                <span>HLS Live</span>
               </Button>
             </div>
           </DroneControlPopover>
@@ -737,6 +740,10 @@ function openLivestreamOthers () {
 
 function openLivestreamAgora () {
   store.commit('SET_LIVESTREAM_AGORA_VISIBLE', true)
+}
+
+function openHlsPlayer () {
+  store.commit('SET_HLS_PLAYER_VISIBLE', true)
 }
 
 async function onCameraAimConfirm (confirm: boolean) {

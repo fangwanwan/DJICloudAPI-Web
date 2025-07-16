@@ -35,6 +35,7 @@ const initStateFunc = () => ({
   drawVisible: false,
   livestreamOthersVisible: false,
   livestreamAgoraVisible: false,
+  hlsPlayerVisible: false,
   coverMap: {} as {
     [key: string]: any[]
   },
@@ -143,6 +144,9 @@ const mutations: MutationTree<RootStateType> = {
   },
   SET_LIVESTREAM_AGORA_VISIBLE (state, bool) {
     state.livestreamAgoraVisible = bool
+  },
+  SET_HLS_PLAYER_VISIBLE(state, visible) {
+    state.hlsPlayerVisible = visible
   },
   SET_MAP_ELEMENT_CREATE (state, info) {
     state.wsEvent.mapElementCreat = info

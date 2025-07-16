@@ -32,7 +32,9 @@
           {{ item.label }}
         </a-select-option>
       </a-select>
+      <!-- 移除RTMP自定义输入框 -->
       <a-select
+        v-if="livetypeSelected !== 1"
         class="ml10"
         style="width:150px"
         placeholder="Select Drone"
@@ -47,6 +49,7 @@
         >
       </a-select>
       <a-select
+        v-if="livetypeSelected !== 1"
         class="ml10"
         style="width:150px"
         placeholder="Select Camera"
@@ -190,6 +193,7 @@ const lensSelected = ref<String>()
 const isDockLive = ref(false)
 const nonSwitchable = 'normal'
 let webrtc: any = null
+// 移除customRtmpUrl相关内容
 
 const onRefresh = async () => {
   droneList.value = []
@@ -238,6 +242,42 @@ const onStart = async () => {
     claritySelected.value
   )
   const timestamp = new Date().getTime().toString()
+  // RTMP模式下只需选择清晰度即可
+  if (livetypeSelected.value === 1) {
+    if (claritySelected.value == null) {
+      message.warn('请选择清晰度！')
+      return
+    }
+    const liveURL = config.rtmpURL + timestamp
+    await startLivestream({
+      url: liveURL,
+      video_id: null,
+      url_type: 1,
+      video_quality: claritySelected.value
+    })
+      .then(res => {
+        if (res.code !== 0) {
+          return
+        }
+        const url = res.data.url
+        const videoElement = videowebrtc.value
+        console.log('start live:', url)
+        console.log(videoElement)
+        const player = new jswebrtc.Player(url, {
+          video: videoElement,
+          autoplay: true,
+          onPlay: (obj: any) => {
+            console.log('start play livestream')
+          }
+        })
+        liveState.value = true
+      })
+      .catch(err => {
+        console.error(err)
+      })
+    return
+  }
+  // 原有校验逻辑
   if (
     livetypeSelected.value == null ||
     droneSelected.value == null ||

@@ -424,6 +424,11 @@
       <a style="position: absolute; right: 10px; top: 10px; font-size: 16px; color: white;" @click="closeLivestreamAgora"><CloseOutlined /></a>
       <LivestreamAgora />
     </div>
+    <div class="liveview" v-if="hlsPlayerVisible" v-drag-window  >
+      <div style="height: 40px; width: 100%" class="drag-title"></div>
+      <a style="position: absolute; right: 10px; top: 10px; font-size: 16px; color: white;" @click="closeHlsPlayer"><CloseOutlined /></a>
+      <HlsPlayer />
+    </div>
   </div>
 </template>
 
@@ -469,6 +474,7 @@ import FlightAreaActionIcon from './flight-area/FlightAreaActionIcon.vue'
 import { EFlightAreaType } from '../types/flight-area'
 import { useFlightArea } from './flight-area/use-flight-area'
 import { useFlightAreaDroneLocationEvent } from './flight-area/use-flight-area-drone-location-event'
+import HlsPlayer from './HlsPlayer.vue'
 
 export default defineComponent({
   components: {
@@ -496,6 +502,7 @@ export default defineComponent({
     LivestreamOthers,
     LivestreamAgora,
     FlightAreaActionIcon,
+    HlsPlayer,
   },
   name: 'GMap',
   props: {},
@@ -561,6 +568,7 @@ export default defineComponent({
     const livestreamAgoraVisible = computed(() => {
       return store.state.livestreamAgoraVisible
     })
+    const hlsPlayerVisible = computed(() => store.state.hlsPlayerVisible)
     const osdVisible = computed(() => {
       return store.state.osdVisible
     })
@@ -815,6 +823,9 @@ export default defineComponent({
     function closeLivestreamAgora () {
       store.commit('SET_LIVESTREAM_AGORA_VISIBLE', false)
     }
+    function closeHlsPlayer () {
+      store.commit('SET_HLS_PLAYER_VISIBLE', false)
+    }
     function updateCoordinates (transformType: string, element: any) {
       const geoType = element.resource?.content.geometry.type
       const type = element.resource?.type as number
@@ -882,6 +893,7 @@ export default defineComponent({
       drawVisible,
       livestreamOthersVisible,
       livestreamAgoraVisible,
+      hlsPlayerVisible,
       osdVisible,
       pin,
       state,
@@ -900,6 +912,7 @@ export default defineComponent({
       DroneInDockEnum,
       closeLivestreamOthers,
       closeLivestreamAgora,
+      closeHlsPlayer,
       qualityStyle,
       selectFlightAreaAction,
     }
