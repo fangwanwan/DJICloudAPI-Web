@@ -23,6 +23,12 @@
       type="primary"
       @click="openHlsPlayer"
     >HLS Live</a-button>
+    <a-button
+      class="mt10"
+      style="width:100%;"
+      type="primary"
+      @click="openFlvPlayer"
+    >FLV Live</a-button>
   </div>
   <div class="live" v-if="showLive" v-drag-window>
     <div style="height: 40px; width: 100%" class="drag-title"></div>
@@ -34,6 +40,11 @@
     <a style="position: absolute; right: 10px; top: 10px; font-size: 16px; color: white;" @click="closeHlsPlayer"><CloseOutlined /></a>
     <HlsPlayer />
   </div>
+  <div class="flv-live-modal" v-if="flvPlayerVisible" v-drag-window>
+    <div style="height: 40px; width: 100%" class="drag-title"></div>
+    <a style="position: absolute; right: 10px; top: 10px; font-size: 16px; color: white;" @click="closeFlvPlayer"><CloseOutlined /></a>
+    <FlvPlayer />
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -42,6 +53,7 @@ import { onMounted, ref, watch } from 'vue'
 import { CloseOutlined } from '@ant-design/icons-vue'
 import { getRoot } from '/@/root'
 import { ERouterName } from '/@/types'
+import FlvPlayer from '../../../components/FlvPlayer.vue'
 const root = getRoot()
 const routeName = ref<string>('LiveOthers')
 const showLive = ref<boolean>(root.$route.name === ERouterName.LIVING)
@@ -57,6 +69,14 @@ function openHlsPlayer () {
 }
 function closeHlsPlayer () {
   hlsPlayerVisible.value = false
+}
+
+const flvPlayerVisible = ref(false)
+function openFlvPlayer () {
+  flvPlayerVisible.value = true
+}
+function closeFlvPlayer () {
+  flvPlayerVisible.value = false
 }
 
 const selectLivestream = (route: string) => {
@@ -106,6 +126,17 @@ onMounted(() => {
 .hls-live-modal {
   position: absolute;
   z-index: 2;
+  left: 50%;
+  top: 10px;
+  transform: translateX(-50%);
+  text-align: center;
+  width: 800px;
+  height: 540px;
+  background: #232323;
+}
+.flv-live-modal {
+  position: absolute;
+  z-index: 3;
   left: 50%;
   top: 10px;
   transform: translateX(-50%);

@@ -26,24 +26,24 @@ import { ref } from 'vue'
 import Hls from 'hls.js'
 
 const videoPlayer = ref<HTMLVideoElement | null>(null)
-const hlsUrl = ref('http://localhost:8881/hls/s1.m3u8')
+const hlsUrl = ref('http://localhost:8080/live/v1.m3u8')
 let hls: Hls | null = null
 
 // 预设视频流列表
 const presetStreams = [
   {
-    name: '测试流#1',
-    url: 'http://localhost:8881/hls/s1.m3u8',
+    name: 'hls_01#1',
+    url: 'http://localhost:8080/live/v1.m3u8',
     description: '演示视频流，低分辨率'
   },
   {
-    name: '测试流#2',
+    name: 'hls_02#2',
     url: 'http://localhost:8080/stream.m3u8',
     description: '演示视频流，中等分辨率'
   },
   {
-    name: '测试流#3',
-    url: 'http://localhost:8881/hls/s3.m3u8',
+    name: 'rtmp流#3',
+    url: 'rtmp://localhost/live/v1',
     description: '演示视频流，高分辨率'
   }
 ]
