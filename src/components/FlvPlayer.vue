@@ -1,15 +1,15 @@
 <template>
-  <div class="flex-column flex-justify-center flex-align-center" style="height: 100%; width: 100%">
+  <div class="flex-column flex-align-center" style="height: 100%; width: 100%">
     <video
       id="flv-video"
       controls
       width="720"
       height="480"
       ref="videoPlayer"
-      style="background: #000"
+      style="background: #000; margin-top: 20px;"
     ></video>
     <div style="margin-top: 20px;">
-      <a-input v-model:value="flvUrl" style="width: 400px" placeholder="请输入HTTP-FLV地址" />
+      <a-input v-model:value="flvUrl" style="width: 400px" placeholder="请输入FLV地址" />
       <a-button type="primary" class="ml10" @click="playFlv">播放</a-button>
       <a-button type="default" class="ml10" @click="refreshVideo">刷新</a-button>
       <a-button type="dashed" class="ml10" @click="resetToDefault">恢复默认</a-button>
@@ -87,6 +87,9 @@ onBeforeUnmount(() => {
 .flex-column {
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  height: 100%;
 }
 .flex-justify-center {
   justify-content: center;

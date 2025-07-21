@@ -33,12 +33,12 @@
     <a style="position: absolute; right: 10px; top: 10px; font-size: 16px; color: white;" @click="() => root.$router.push('/' + ERouterName.LIVESTREAM)"><CloseOutlined /></a>
     <router-view :name="routeName" />
   </div>
-  <div class="hls-live-modal" v-if="hlsPlayerVisible" v-drag-window>
+  <div class="live hls-live-modal" v-if="hlsPlayerVisible" v-drag-window>
     <div style="height: 40px; width: 100%" class="drag-title"></div>
     <a style="position: absolute; right: 10px; top: 10px; font-size: 16px; color: white;" @click="closeHlsPlayer"><CloseOutlined /></a>
     <HlsPlayer />
   </div>
-  <div class="flv-live-modal" v-if="flvPlayerVisible" v-drag-window>
+  <div class="live flv-live-modal" v-if="flvPlayerVisible" v-drag-window>
     <div style="height: 40px; width: 100%" class="drag-title"></div>
     <a style="position: absolute; right: 10px; top: 10px; font-size: 16px; color: white;" @click="closeFlvPlayer"><CloseOutlined /></a>
     <FlvPlayer />
@@ -125,28 +125,6 @@ onMounted(() => {
   text-align: center;
   width: 800px;
   height: 720px;
-  background: #232323;
-}
-.hls-live-modal {
-  position: absolute;
-  z-index: 2;
-  left: 50%;
-  top: 10px;
-  transform: translateX(-50%);
-  text-align: center;
-  width: 800px;
-  height: 540px;
-  background: #232323;
-}
-.flv-live-modal {
-  position: absolute;
-  z-index: 3;
-  left: 50%;
-  top: 10px;
-  transform: translateX(-50%);
-  text-align: center;
-  width: 800px;
-  height: 540px;
   background: #232323;
 }
 .livestream-btn {

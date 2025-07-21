@@ -1,12 +1,12 @@
 <template>
-  <div class="flex-column flex-justify-center flex-align-center" style="height: 100%; width: 100%">
+  <div class="flex-column flex-align-center" style="height: 100%; width: 100%">
     <video
       id="hls-video"
       controls
       width="720"
       height="480"
       ref="videoPlayer"
-      style="background: #000"
+      style="background: #000; margin-top: 20px;"
     ></video>
     <div style="margin-top: 20px;">
       <a-input v-model:value="hlsUrl" style="width: 400px" placeholder="请输入HLS(m3u8)地址" />
