@@ -18,14 +18,12 @@
     >
     </router-link>
     <a-button
-      class="mt10"
-      style="width:100%;"
+      class="mt10 livestream-btn"
       type="primary"
       @click="openHlsPlayer"
     >HLS Live</a-button>
     <a-button
-      class="mt10"
-      style="width:100%;"
+      class="mt10 livestream-btn"
       type="primary"
       @click="openFlvPlayer"
     >FLV Live</a-button>
@@ -66,6 +64,8 @@ const options = [
 const hlsPlayerVisible = ref(false)
 function openHlsPlayer () {
   hlsPlayerVisible.value = true
+  showLive.value = false
+  flvPlayerVisible.value = false
 }
 function closeHlsPlayer () {
   hlsPlayerVisible.value = false
@@ -74,6 +74,8 @@ function closeHlsPlayer () {
 const flvPlayerVisible = ref(false)
 function openFlvPlayer () {
   flvPlayerVisible.value = true
+  showLive.value = false
+  hlsPlayerVisible.value = false
 }
 function closeFlvPlayer () {
   flvPlayerVisible.value = false
@@ -82,6 +84,8 @@ function closeFlvPlayer () {
 const selectLivestream = (route: string) => {
   showLive.value = root.$route.name === ERouterName.LIVING
   routeName.value = route
+  hlsPlayerVisible.value = false
+  flvPlayerVisible.value = false
 }
 
 onMounted(() => {
@@ -144,5 +148,15 @@ onMounted(() => {
   width: 800px;
   height: 540px;
   background: #232323;
+}
+.livestream-btn {
+  width: 90%;
+  min-width: 120px;
+  max-width: 300px;
+  height: 38px;
+  font-size: 16px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
 }
 </style>
