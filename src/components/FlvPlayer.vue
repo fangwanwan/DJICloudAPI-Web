@@ -14,6 +14,9 @@
       <a-button type="default" class="ml10" @click="refreshVideo">刷新</a-button>
       <a-button type="dashed" class="ml10" @click="resetToDefault">恢复默认</a-button>
     </div>
+    <div style="margin-top: 20px;">
+      <a-button type="primary" @click="detectPeople">行人识别</a-button>
+    </div>
     <div style="margin-top: 10px; color: #aaa; font-size: 13px;">
       默认地址: <span style="color:#4fc3f7">http://localhost:8080/live/v1.flv</span>
     </div>
@@ -23,6 +26,7 @@
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import flvjs from 'flv.js'
+import { message } from 'ant-design-vue'
 
 const DEFAULT_FLV_URL = 'http://localhost:8080/live/v1.flv'
 const videoPlayer = ref<HTMLVideoElement | null>(null)
@@ -67,6 +71,12 @@ function refreshVideo () {
 function resetToDefault () {
   flvUrl.value = DEFAULT_FLV_URL
   playFlv()
+}
+
+async function detectPeople () {
+  const res = await fetch('http://localhost:6789/detection/people')
+  const data = await res.text()
+  message.success('识别结果: ' + data)
 }
 
 onMounted(() => {
